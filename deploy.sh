@@ -1,8 +1,8 @@
 #!/bin/bash
 
 REGION=us-east-1
-SERVICE_NAME=aws-task-1-service
-CLUSTER=tetranoodle-cluster
+SERVICE_NAME=aws-service-1
+CLUSTER=aws-cluster
 IMAGE_VERSION="v_"${BUILD_NUMBER}
 TASK_FAMILY="aws-task-1"
 
