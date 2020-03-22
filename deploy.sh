@@ -1,19 +1,19 @@
 #!/bin/bash
 
 REGION=us-east-1
-SERVICE_NAME=Aws-app-service
+SERVICE_NAME=aws-task-1-service
 CLUSTER=tetranoodle-cluster
 IMAGE_VERSION="v_"${BUILD_NUMBER}
-TASK_FAMILY="Aws-app"
+TASK_FAMILY="aws-task-1"
 
 # Create a new task definition for this build
 
-sed -e "s;%BUILD_NUMBER%;${BUILD_NUMBER};g" ../Aws-app.json > Aws-app-v_${BUILD_NUMBER}.json
+sed -e "s;%BUILD_NUMBER%;${BUILD_NUMBER};g" ../aws-task-1.json > aws-task-1-v_${BUILD_NUMBER}.json
 
-aws ecs register-task-definition --family Aws-app --cli-input-json file://Aws-app-v_${BUILD_NUMBER}.json
+aws ecs register-task-definition --family aws-task-1 --cli-input-json file://aws-task-1-v_${BUILD_NUMBER}.json
 
 # Update the service with the new task definition and desired count
-REVISION=`aws ecs describe-task-definition --task-definition Aws-app | egrep "revision" | tr "/" " " | awk '{print $2}' | sed 's/"$//'`
+REVISION=`aws ecs describe-task-definition --task-definition aws-task-1 | egrep "revision" | tr "/" " " | awk '{print $2}' | sed 's/"$//'`
 SERVICES=`aws ecs describe-services --services ${SERVICE_NAME} --cluster ${CLUSTER} --region ${REGION} | jq .failures[]`
 
 
